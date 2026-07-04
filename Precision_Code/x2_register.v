@@ -4,18 +4,20 @@ module x2_register(
         clk,
         rst,
         en_code,
+        epoch_1p5,
         clk_10p23,
         x2_out,
         epoch_x2
     );
     
     input clk,rst;
-    input clk_10p23;
-    input en_code;
-    output reg [37:1]x2_out;
-    output reg epoch_x2;
+    input clk_10p23;             // 10.23 MHz Pulse                   
+    input en_code;               // Enables P_code                   
+    output reg epoch_1p5;        // 1.5 ms Epoch                      
+    output reg [37:1]x2_out;     // Output of X2 reg                  
+    output reg epoch_x2;         // Epoch at end of each X2 sequence  
     
-    reg [37:1]delay;
+    reg [37:1]delay;            // x2 sequnce length is 15345037
     
     reg [11:0]x2_a,x2_b;
     
@@ -25,16 +27,14 @@ module x2_register(
     reg [23:0] count_24;
     reg [8:0]  count_380;
     
-    reg pulse_1p5;
-    
-    wire clk_10p23;
-    
+
     integer i;
     always@(posedge clk or posedge rst) begin
         if(rst) begin
-          
+            // Initial Conditions
             x2_a       <= 12'b101001001001;
             x2_b       <= 12'b001010101010;
+            
             x2_out     <= 37'd0; 
             delay      <= 37'h1fffffffff;
             count_x2_a <= 12'd1;
@@ -43,14 +43,14 @@ module x2_register(
             count_24   <= 24'd1;  
             count_380  <= 9'd0; 
             epoch_x2   <= 1'b0;
-            pulse_1p5  <= 1'b0;
+            epoch_1p5  <= 1'b0;
             
         end
         else begin
             if(clk_10p23 && en_code) begin
             
-                delay[1]    <= x2_a[0] ^ x2_b[0];              
-                delay[37:2] <= delay[36:1];
+                delay[1]    <= x2_a[0] ^ x2_b[0];      //37-bit shift register for delaying        
+                delay[37:2] <= delay[36:1];            
                 
                 for ( i= 1; i < 38 ; i = i + 1) begin
                     x2_out[i]  <= delay[i];  // i-cycle delay
@@ -110,16 +110,10 @@ module x2_register(
 //                count_24 <= (count_24 == 24'd15345037)? count_24 <= 24'd1 : count_24 <= count_24 + 24'd1;
                 
                 if(epoch_x2) begin
-                    if(count_3750 == 12'd3750) begin
-                         count_3750 <= 24'd1;
-                        //epoch_x2   <= 1'b0;
-                        //pulse_1p5  <= 1'b1;
-                    end
-                    else begin
-                        count_3750 <= count_3750 + 12'd1;
-                    end
-                    pulse_1p5 <= (count_3750 == 12'd3750);
-                end                        
+                    count_3750 <= (count_3750 == 12'd3750)? 24'd1: count_3750 + 12'd1;
+                end  
+                    epoch_1p5 <= (count_3750 == 12'd3750);
+                                        
 
             end 
          end  

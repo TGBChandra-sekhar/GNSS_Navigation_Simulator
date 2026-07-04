@@ -4,39 +4,34 @@ module x1_register(
         clk,
         rst,
         en_code,
+        epoch_1p5,
         clk_10p23,
         x1_out,
         epoch_x1
     );
     
     input clk,rst;
-    input en_code;
-    input clk_10p23;
-    output reg x1_out;
-    output reg epoch_x1;
+    input clk_10p23;            // 10.23 MHz Pulse 
+    input en_code;              // Enables P_code     
+    output reg epoch_1p5;       // 1.5 ms Epoch
+    output reg x1_out;          // Output of X1 reg 
+    output reg epoch_x1;        // Epoch at end of each X1 sequence
     
     reg [11:0]x1_a,x1_b;
     
     reg [11:0] count_x1_a;
     reg [11:0] count_x1_b;
-    reg [11:0] count_3750;
-    reg [23:0] count_24;
+    reg [11:0] count_3750; // X1 repeats for 3750 times
+    reg [23:0] count_24;   // 24bit counter (0-15345000)
     reg [8:0]  count_343;
     
-    reg pulse_1p5;
     
     wire clk_10p23;
-    
-//    clk_div_4 uut (
-//            .clk       (clk),
-//            .rst       (rst),
-//            .clk_10p23 (clk_10p23)
-//    );
     
     
     always@(posedge clk or posedge rst) begin
         if(rst) begin
-          
+            // Initial Conditions
             x1_a   <= 12'b000100100100;
             x1_b   <= 12'b001010101010;
             x1_out <= 1'b0;
@@ -47,18 +42,17 @@ module x1_register(
             count_24   <= 24'd1;  
             count_343  <= 9'd0; 
             epoch_x1   <= 1'b0;
-            pulse_1p5  <= 1'b0;
+            epoch_1p5  <= 1'b0;
             
         end
         else begin
             if(clk_10p23 && en_code) begin
             
                 x1_out <= x1_a[0] ^ x1_b[0];
-                
-                        
+                     
                 if(count_x1_a == 12'd4092) begin
                     x1_a <= 12'b000100100100;
-                    count_x1_a <= 12'd1;
+                    count_x1_a <= 12'd1;        // counts => 1-4092
                 end
                 else begin
                     x1_a <= {(x1_a[0]^x1_a[1]^x1_a[4]^x1_a[6]),x1_a[11:1]};
@@ -67,7 +61,7 @@ module x1_register(
                 
                 epoch_x1 <= (count_x1_a == 12'd4091);                 
 
-                if(count_24 < 24'd15344657) begin
+                if(count_24 < 24'd15344657) begin       // x1_b is in 3749th iteration
                     if(count_x1_b == 12'd4093) begin
                         x1_b <= 12'b001010101010;
                         count_x1_b <= 12'd1; 
@@ -78,8 +72,8 @@ module x1_register(
                     end
                 end
                 else begin
-                    if(count_343 < 9'd344 ) begin                    
-                        x1_b <= x1_b;
+                    if(count_343 < 9'd344 ) begin     // additional 343 chips required to equate its lenght with x1_a               
+                        x1_b <= x1_b;                 // Last Bit extension
                         count_343 <= count_343 + 9'd1;
                         count_x1_b <= (count_x1_b == 12'd4093)? 12'd1 : count_x1_b + 12'd1; 
                     end
@@ -101,6 +95,7 @@ module x1_register(
                 
                 if(epoch_x1) begin
                     if(count_3750 == 12'd3750) begin
+                        // After 3750 iterations, again re-initiated 
                         x1_a <= 12'b000100100100;
                         x1_b <= 12'b001010101010;
                         x1_out <= 1'b0;
@@ -111,12 +106,13 @@ module x1_register(
                         count_24   <= 24'd1;  
                         count_343  <= 9'd0; 
                         //epoch_x1   <= 1'b0;
-                        //pulse_1p5  <= 1'b1;
+                        //epoch_1p5  <= 1'b1;
                     end
                     else begin
                         count_3750 <= count_3750 + 12'd1;
                     end
-                    pulse_1p5 <= (count_3750 == 12'd3750);
+                    
+                    epoch_1p5 <= (count_3750 == 12'd3750);  
                 end                        
 
             end 
