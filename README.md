@@ -7,18 +7,6 @@ This repository contains the FPGA and supporting code for a GPS L1 Global Naviga
 
 ---
 
-## 📍 Table of Contents
-
-- [Overview](#overview)  
-- [Features](#features)  
-- [Repository Structure](#repository-structure)  
-- [Component Details](#component-details)  
-- [Build & Deployment](#build--deployment)  
-- [Usage](#usage)  
-- [License](#license)
-
----
-
 ## 🛰️ Overview
 
 GPS L1 signals transmit a pseudorandom noise (PRN) code modulated with navigation data that contains satellite ephemeris and timing information. This project implements the following on a **Kintex-7 FPGA**:
