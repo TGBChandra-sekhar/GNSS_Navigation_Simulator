@@ -7,7 +7,7 @@ This repository contains the FPGA and supporting code for a GPS L1 Global Naviga
 
 ---
 
-## 🛰️ Overview
+##  Overview
 
 GPS L1 signals transmit a pseudorandom noise (PRN) code modulated with navigation data that contains satellite ephemeris and timing information. This project implements the following on a **Kintex-7 FPGA**:
 
@@ -20,18 +20,18 @@ This FPGA-centric simulator is useful for testing GNSS receivers, validating tra
 
 ---
 
-## ✅ Features
+##  Features
 
-- 🔢 GPS L1 C/A coarse acquisition code generator  
-- 📡 Precision Nav Code generation and alignment  
-- 🧠 Coarse and Fine synchronization logic  
-- 🛠 PL-PS interface for control and data synchronization  
-- ⚙️ Bitstream and compiled binaries included (`*.bit`, `*.elf`)  
-- 🧾 Modular Verilog architecture
+-  GPS L1 C/A coarse acquisition code generator  
+-  Precision Nav Code generation and alignment  
+-  Coarse and Fine synchronization logic  
+-  PL-PS interface for control and data synchronization  
+-  Bitstream and compiled binaries included (`*.bit`, `*.elf`)  
+-  Modular Verilog architecture
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 ```
 ├── Coarse_Aquisition_Code/
 ├── PS_Code/
@@ -43,9 +43,9 @@ This FPGA-centric simulator is useful for testing GNSS receivers, validating tra
 ```
 ---
 
-## 🔍 Component Details
+##  Component Details
 
-### 📌 **Coarse_Aquisition_Code/**  
+###  **Coarse_Aquisition_Code/**  
 Contains Verilog modules responsible for generating and acquiring the **GPS L1 C/A coarse acquisition code**.  
 This includes logic to produce PRN sequences, early/late code correlations, and integration blocks used for coarse code synchronization.
 
@@ -55,7 +55,7 @@ This includes logic to produce PRN sequences, early/late code correlations, and 
 
 ---
 
-### 📌 **Precision_Code/**  
+###  **Precision_Code/**  
 Contains Verilog modules used for *precision code* generation used in final alignment of the spreading code.  
 This might include logic for higher resolution code phase control and fine timing adjustments.
 
@@ -65,7 +65,7 @@ This might include logic for higher resolution code phase control and fine timin
 
 ---
 
-### 📌 **PS_Code/**  
+###  **PS_Code/**  
 Includes C or embedded software code that runs on the **processing system (PS)** — typically an ARM core, microcontroller, or custom soft-CPU.  
 This code:
 
@@ -79,7 +79,7 @@ This code:
 
 ---
 
-### 📌 **Top_Wrapper_PL_PS_Interface/**  
+###  **Top_Wrapper_PL_PS_Interface/**  
 Top-level FPGA wrapper combining all PL modules and the interface logic with PS.  
 This includes the FPGA bit-level integration, clock management, bus interfaces (AXI, bus wrappers), and synchronization units.
 
@@ -90,7 +90,7 @@ This includes the FPGA bit-level integration, clock management, bus interfaces (
 
 ---
 
-### 🧠 **Compiled Binaries**
+###  **Compiled Binaries**
 
 | File | Purpose |
 |------|---------|
@@ -101,9 +101,9 @@ These files are ready to load on a target hardware platform (e.g., **Xilinx Kint
 
 ---
 
-## 🔧 Build & Deployment
+##  Build & Deployment
 
-### 🛠 FPGA Synthesis
+###  FPGA Synthesis
 
 1. Open the project in **Vivado** (or equivalent Xilinx tools).  
 2. Import Verilog modules from the directories:  
@@ -113,14 +113,14 @@ These files are ready to load on a target hardware platform (e.g., **Xilinx Kint
 3. Connect clocks, reset logic, and PS interface IP blocks.  
 4. Generate the `gnss_top_wrapper.bit` bitstream.
 
-### 💻 PS Firmware
+###  PS Firmware
 
 1. Use **ARM GCC / SDK** to compile `PS_Code` into `GNSS_control_logic.elf`.  
 2. Load ELF via boot loader or debugging interface.
 
 ---
 
-## ▶ Usage
+##  Usage
 
 1. Program the **Kintex-7 FPGA** with `gnss_top_wrapper.bit`.  
 2. Boot the PS with `GNSS_control_logic.elf`.  
@@ -131,7 +131,7 @@ The simulator supports control of GPS satellite parameters and NAV message align
 
 ---
 
-## 📌 Notes
+##  Notes
 
 - This simulator focuses on baseband signal generation and data synchronization — it does **not** include full RF front-end IF upconversion.  
 - GPS L1 code formats and NAV message structures follow GNSS standards as used in GPS receivers and simulators.
