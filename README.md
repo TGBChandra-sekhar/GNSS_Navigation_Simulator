@@ -44,7 +44,7 @@ This FPGA-centric simulator is useful for testing GNSS receivers, validating tra
 ---
 
 ## 📁 Repository Structure
-/
+```
 ├── Coarse_Aquisition_Code/
 ├── PS_Code/
 ├── Precision_Code/
@@ -52,7 +52,7 @@ This FPGA-centric simulator is useful for testing GNSS receivers, validating tra
 ├── GNSS_control_logic.elf
 ├── gnss_top_wrapper.bit
 └── README.md
-
+```
 ---
 
 ## 🔍 Component Details
