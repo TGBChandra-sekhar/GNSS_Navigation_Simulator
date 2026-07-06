@@ -143,23 +143,24 @@ The simulator supports control of GPS satellite parameters and NAV message align
 
 ---
 
-## 📄 License
-
-This project is provided *as-is*. Refer to the repository for any specific licensing information.
-
----
-
 ## 📌 Notes
 
 - This simulator focuses on baseband signal generation and data synchronization — it does **not** include full RF front-end IF upconversion.  
 - GPS L1 code formats and NAV message structures follow GNSS standards as used in GPS receivers and simulators.
 
 ---
-
-## 👍 Acknowledgements
-
-Thanks to the open-source GNSS signal processing community and FPGA developers for foundational ideas and architectures (e.g., GPS L1 baseband models). :contentReference[oaicite:0]{index=0}
-
+If you want, I can also help you generate a **technical block diagram** or **user guide PDF** for this project!
 ---
 
-If you want, I can also help you generate a **technical block diagram** or **user guide PDF** for this project!
+## Tools Used
+  - Xilinx Vivado
+  - vitis 
+  - GitHub
+    
+
+---
+##  Author
+**Chandra Sekhar Tanuku**
+* Focus Areas: **VLSI Design, FPGA, Digital Communication Systems**
+---
+
