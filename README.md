@@ -3,7 +3,7 @@
 
 This repository contains the FPGA and supporting code for a GPS L1 Global Navigation Satellite System (GNSS) simulator. It generates GPS L1 C/A baseband signals and synchronizes NAV data for GPS signal simulation using a Xilinx Kintex-7 FPGA platform.
 
-> ⚙️ The design supports baseband generation of GPS L1 coarse/acquisition and precision codes, NAV data bit synchronization, and top-level FPGA integration between PL (Programmable Logic) and PS (Processing System).
+>  The design supports baseband generation of GPS L1 coarse/acquisition and precision codes, NAV data bit synchronization, and top-level FPGA integration between PL (Programmable Logic) and PS (Processing System).
 
 ---
 
