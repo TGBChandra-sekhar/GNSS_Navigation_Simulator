@@ -4,7 +4,7 @@ module x1_register(
         clk,
         rst,
         en_code,
-        epoch_1p5,
+        //epoch_1p5,
         clk_10p23,
         x1_out,
         epoch_x1
@@ -13,7 +13,7 @@ module x1_register(
     input clk,rst;
     input clk_10p23;            // 10.23 MHz Pulse 
     input en_code;              // Enables P_code     
-    output reg epoch_1p5;       // 1.5 ms Epoch
+    //output reg epoch_1p5;     // 1.5 ms Epoch
     output reg x1_out;          // Output of X1 reg 
     output reg epoch_x1;        // Epoch at end of each X1 sequence
     
@@ -21,8 +21,8 @@ module x1_register(
     
     reg [11:0] count_x1_a;
     reg [11:0] count_x1_b;
-    reg [11:0] count_3750; // X1 repeats for 3750 times
-    reg [23:0] count_24;   // 24bit counter (0-15345000)
+    reg [11:0] count_3750;      // X1 repeats for 3750 times
+    reg [23:0] count_24;        // 24bit counter (0-15345000)
     reg [8:0]  count_343;
     
     
@@ -42,7 +42,7 @@ module x1_register(
             count_24   <= 24'd1;  
             count_343  <= 9'd0; 
             epoch_x1   <= 1'b0;
-            epoch_1p5  <= 1'b0;
+            //epoch_1p5  <= 1'b0;
             
         end
         else begin
@@ -91,7 +91,7 @@ module x1_register(
 //                    count_24 <= count_24 + 24'd1;
 //                end
                 
-                count_24 <= (count_24 == 24'd15345000)? count_24 <= 24'd1 : count_24 <= count_24 + 24'd1;
+                count_24 <= (count_24 == 24'd15345000)? 24'd1 : count_24 + 24'd1;
                 
                 if(epoch_x1) begin
                     if(count_3750 == 12'd3750) begin
@@ -112,7 +112,7 @@ module x1_register(
                         count_3750 <= count_3750 + 12'd1;
                     end
                     
-                    epoch_1p5 <= (count_3750 == 12'd3750);  
+                    //epoch_1p5 <= (count_3750 == 12'd3750);  
                 end                        
 
             end 
