@@ -1,34 +1,35 @@
 `timescale 1ns / 1ps
 
 module nav_sim_control(
-    clk_in,
+    sys_diff_clock_clk_p,
+    sys_diff_clock_clk_n,  
     reset,
     epoch_6s,
     epoch_6s_299_1,
     pulse_50,
-    //clk_out,
+    clk_40p92,
     en_start,
     nav_data
     );
     
-    input  clk_in;
+    input sys_diff_clock_clk_p;
+    input sys_diff_clock_clk_n;
+    
     input  reset;
     input  epoch_6s;              // Will initiates the entire process(for the 1st time)
     input  epoch_6s_299_1;        // Will re-initiates the same process(from 2nd time)
     input  pulse_50;              // Pulse for every 50 Hz 
-    //output clk_out;               // Single ended clk (40.92 MHz) from Block design
+    output clk_40p92;             // Single ended clk (40.92 MHz) from Block design to extract out
     output reg en_start;          // To initiate the 50Hz epoch
     output reg nav_data;
     
-    
+    wire clk_40p92_t;             // Temp_reg for clk_40p92
     wire clk_i;                   // used for always block
     reg  en_read_nav;             // Enables nav data seriallization  
     reg  nav_epoch;               // Epoch at the end of one frame (5 sub frames)      
     reg  [8:0]count_300;          // Count 300 bits(1 sub frame)
     reg  [29:0]p_s1,p_s2,p_s3,p_s4,p_s5,p_s6,p_s7,p_s8,p_s9,p_s10;  // Temporary Registers to store the words
-    //reg  en_load;
     
-    wire bufg_clk;
     wire BRAM_PORTB_0_clk;
     wire BRAM_PORTB_0_en;
     wire BRAM_PORTB_0_rst;
@@ -46,27 +47,35 @@ module nav_sim_control(
         .BRAM_PORTB_0_en       (BRAM_PORTB_0_en  ),
         .BRAM_PORTB_0_rst      (BRAM_PORTB_0_rst ),
         .BRAM_PORTB_0_we       (BRAM_PORTB_0_we  ),
-        .BUFG_I_0              (bufg_clk         ),
+        .clk_40p92             (clk_40p92_t      ),
+        .CLK_IN1_D_0_clk_n     (sys_diff_clock_clk_n),
+        .CLK_IN1_D_0_clk_p     (sys_diff_clock_clk_p),
         .reset_rtl_0           (reset)
         );   
         
+        
        
-   assign bufg_clk = clk_in;    
-   assign BRAM_PORTB_0_clk = clk_in;     // PLL/MMCM outputs in Vivado MUST go through a BUFG to be used as a fabric clock
-   assign clk_i = clk_in;                // Otherwise it will make net as "Z"
+   //assign bufg_clk = clk_in;    
+   //assign BRAM_PORTB_0_clk = clk_in;     // PLL/MMCM outputs in Vivado MUST go through a BUFG to be used as a fabric clock
+   //assign clk_i = clk_in;                // Otherwise it will make net as "Z"
    
     
-    //BUFG BUFG_inst1 (
-    //  .O(clk_i),             
-    //  .I(clk_out)            
-    //);
+    BUFG BUFG_inst1 (
+      .O(clk_40p92),             
+      .I(clk_40p92_t)            
+    );
+    
+    BUFG BUFG_inst2 (
+       .O(BRAM_PORTB_0_clk), 
+       .I(clk_40p92_t)           
+    );
+    
+    BUFG BUFG_inst3 (
+       .O(clk_i), 
+       .I(clk_40p92_t)           
+    );
     //
-    //BUFG BUFG_inst2 (
-    //   .O(BRAM_PORTB_0_clk), 
-    //   .I(clk_out)           
-    //);
-    //
-    //assign clk_out = clk_i;  // To extract out
+    //assign clk_out = clk_i;  
     
     assign BRAM_PORTB_0_en = 1;
     assign BRAM_PORTB_0_rst = reset;
