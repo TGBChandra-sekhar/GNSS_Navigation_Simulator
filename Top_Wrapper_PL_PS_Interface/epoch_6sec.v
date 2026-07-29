@@ -17,11 +17,11 @@ module epoch_6sec (
     always@(posedge clk or posedge rst) begin
         if(rst) begin
             epoch_6s <= 1'd0;
-            count <= 2'd0;
+            count    <= 2'd0;
         end
         else begin
             if(epoch_1p5) begin
-                if(count == 3) begin
+                if(count == 2'd3) begin
                     count <= 2'b0;
                  end
                  else begin
@@ -29,7 +29,10 @@ module epoch_6sec (
                  end
 
                 epoch_6s <= (count == 2'd0); 
-            end   
+            end 
+            else begin
+                epoch_6s <= 1'd0;
+            end  
         end
      end  
 endmodule
