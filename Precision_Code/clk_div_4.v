@@ -9,8 +9,8 @@ module clk_div_4(
     
     input clk;              // 40.92 MHz
     input rst;
-    input  en_start;
-    output reg clk_10p23;  // 10.233 MHz
+    input en_start;
+    output reg clk_10p23;   // 10.233 MHz
     
     reg [1:0]count;
     
@@ -20,7 +20,7 @@ module clk_div_4(
             count <= 2'd0;
         end
         else begin
-            if(en_start) begin
+            if(en_start==1) begin
                 if(count == 2'd3) begin
                     count <= 2'd0;
                 end
@@ -28,7 +28,10 @@ module clk_div_4(
                     count <= count + 2'd1;
                 end
                 
-                clk_10p23 <= (count == 2'd0);  // Every Pulse will at count=1
+                clk_10p23 <= (count == 2'd0);  // Every Pulse at count=1
+            end
+            else begin
+                count <= 2'd0;
             end
         end
     end
