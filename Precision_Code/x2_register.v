@@ -4,7 +4,7 @@ module x2_register(
         clk,
         rst,
         en_code,
-        epoch_1p5,
+        //epoch_1p5,
         clk_10p23,
         x2_out,
         epoch_x2
@@ -13,11 +13,11 @@ module x2_register(
     input clk,rst;
     input clk_10p23;             // 10.23 MHz Pulse                   
     input en_code;               // Enables P_code                   
-    output reg epoch_1p5;        // 1.5 ms Epoch                      
+    //output reg epoch_1p5;      // 1.5 ms Epoch                      
     output reg [37:1]x2_out;     // Output of X2 reg                  
     output reg epoch_x2;         // Epoch at end of each X2 sequence  
     
-    reg [37:1]delay;            // x2 sequnce length is 15345037
+    reg [37:1]delay;             // x2 sequnce length is 15345037
     
     reg [11:0]x2_a,x2_b;
     
@@ -43,7 +43,7 @@ module x2_register(
             count_24   <= 24'd1;  
             count_380  <= 9'd0; 
             epoch_x2   <= 1'b0;
-            epoch_1p5  <= 1'b0;
+            //epoch_1p5  <= 1'b0;
             
         end
         else begin
@@ -112,7 +112,7 @@ module x2_register(
                 if(epoch_x2) begin
                     count_3750 <= (count_3750 == 12'd3750)? 24'd1: count_3750 + 12'd1;
                 end  
-                    epoch_1p5 <= (count_3750 == 12'd3750);
+                    //epoch_1p5 <= (count_3750 == 12'd3750);
                                         
 
             end 
