@@ -67,7 +67,7 @@ This might include logic for higher resolution code phase control and fine timin
 ---
 
 ###  **PS_Code/**  
-Includes C or embedded software code that runs on the **processing system (PS)** — typically an ARM core, microcontroller, or custom soft-CPU.  
+Includes C or embedded software code that runs on the **processing system (PS)** — typically an ARM core, microcontroller, or custom soft-CPU(MicroBlaze).  
 This code:
 
 - Coordinates FPGA logic configuration  
@@ -95,7 +95,7 @@ This includes the FPGA bit-level integration, clock management, bus interfaces (
 
 | File | Purpose |
 |------|---------|
-| **GNSS_control_logic.elf** | Executable for PS/ARM controlling FPGA logic |
+| **GNSS_control_logic.elf** | Executable for MicroBlaze controlling FPGA logic |
 | **gnss_top_wrapper.bit** | Synthesized FPGA configuration bitstream |
 
 These files are ready to load on a target hardware platform (e.g., **Xilinx Kintex-7 board**) with a compatible boot loader.
@@ -142,8 +142,9 @@ If you want, I can also help you generate a **technical block diagram** or **use
 ---
 
 ## Tools Used
-  - Xilinx Vivado
-  - vitis 
+  - Xilinx Vivado 2025.1
+  - vitis 2022.1
+  - Matlab
   - GitHub
     
 
