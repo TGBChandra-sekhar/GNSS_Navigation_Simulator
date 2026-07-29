@@ -1,5 +1,43 @@
 `timescale 1ns / 1ps
 
+module clk_div_40 (
+            clk,        
+            rst,
+            en_start,
+            clk_1p023   
+        );
+
+    input clk;              // 40.92 MHz
+    input rst;
+    input en_start;
+    output reg  clk_1p023;  // 1.023 MHz
+
+    reg [5:0] count;        // count => 0 - 39 
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            count      <= 6'd0;
+            clk_1p023  <= 1'b0;
+        end
+        else begin
+            if(en_start==1) begin
+                if (count  == 6'd39) begin
+                    count  <= 6'd0;          
+                end
+                else begin
+                    count  <= count + 6'd1;  
+                end
+                clk_1p023  <= (count == 6'd0); // Pulse will be at count=1
+            end
+            else begin
+                count <= 6'd0;
+            end
+        end
+    end
+
+endmodule
+
+
 //module clk_div_40 (
 //        clk,
 //        rst,
@@ -32,42 +70,6 @@
 //        end
 //    end
 //endmodule
-
-
-module clk_div_40 (
-            clk,        
-            rst,
-            en_start,
-            clk_1p023   
-        );
-
-    input clk;              // 40.92 MHz
-    input rst;
-    input en_start;
-    output reg  clk_1p023;  // 1.023 MHz
-
-    reg [5:0] count;  // count => 0 - 39 
-
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            count      <= 6'd0;
-            clk_1p023  <= 1'b0;
-        end
-        else begin
-            if(en_start) begin
-                if (count  == 6'd39) begin
-                    count  <= 6'd0;          
-                end
-                else begin
-                    count  <= count + 6'd1;  
-                end
-                clk_1p023  <= (count == 6'd0); // Pulse will be at count=1
-            end
-        end
-    end
-
-endmodule
-
 
 
 
