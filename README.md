@@ -520,6 +520,6 @@ During accelerated simulation, epoch counter limits may be reduced. Hardware bui
 
 **Chandra Sekhar Tanuku**
 
-*Focus Areas: FPGA Design, VLSI, Digital Communication Systems, Embedded Systems, and GNSS Signal Processing*
+*Focus Areas: FPGA Design, VLSI, Digital Communication Systems, and GNSS Signal Processing*
 
 ---
