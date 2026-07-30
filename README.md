@@ -41,7 +41,7 @@ This simulator is intended for FPGA development, digital baseband verification, 
 - Request and completion control-word handshake  
 - Parallel NAV-word capture and serial NAV-bit generation  
 - XOR operation between NAV data and PRN code  
-- Differential external 40.92 MHz clock support  
+- Differential external 100 MHz clock support  
 - Vivado behavioural simulation support  
 - Modular Verilog and C source-code organisation  
 
@@ -162,7 +162,7 @@ The 40.92 MHz clock is used for:
 - Epoch generators  
 - Counters and serializers  
 
-The design supports an external differential 40.92 MHz clock connected to a clock-capable differential input pair on the Arty A7 board.
+The design supports an external differential 100 MHz clock connected to a clock-capable differential input pair on the Arty A7 board.
 
 Top-level clock ports:
 
@@ -327,7 +327,7 @@ Main IP blocks:
 | AXI Interconnect | Connects MicroBlaze to AXI peripherals |
 | AXI BRAM Controller | Provides MicroBlaze access to BRAM Port A |
 | Block Memory Generator | True dual-port shared BRAM |
-| Clocking Wizard | Receives and conditions the 40.92 MHz clock |
+| Clocking Wizard | Receives 100 MHz and scale down it to 40.92 MHz |
 | Processor System Reset | Generates synchronized processor and AXI resets |
 | Local Memory | Stores the MicroBlaze program and data |
 
@@ -462,7 +462,7 @@ During accelerated simulation, epoch counter limits may be reduced. Hardware bui
 
 ##  Usage
 
-1. Connect a compatible external differential 40.92 MHz clock source.  
+1. Connect a compatible external differential 100 MHz clock source.  
 2. Program the Arty A7 FPGA with `gnss_top_wrapper.bit`.  
 3. Download `GNSS_control_logic.elf` to MicroBlaze.  
 4. Start the MicroBlaze application.  
@@ -512,7 +512,7 @@ During accelerated simulation, epoch counter limits may be reduced. Hardware bui
 - **FPGA:** Xilinx Artix-7 XC7A100T  
 - **Package:** CSG324  
 - **Speed grade:** -2  
-- **System clock:** External differential 40.92 MHz  
+- **System clock:** External differential 100 MHz  
 
 ---
 
