@@ -190,18 +190,16 @@ The positive and negative clock inputs are connected to the Clocking Wizard, whi
 │   ├── clk_div_4.v
 │   └── related precision-code modules
 │
-├── Navigation_Data_Control/
-│   ├── nav_sim_control.v
-│   ├── epoch_50hz.v
-│   ├── epoch_1p5.v
-│   ├── epoch_6sec.v
-│   └── epoch_tow.v
-│
 ├── Vitis_code/
 │   └── control_logic.c
 │
 ├── Top_Wrapper_PL_PS_Interface/
 │   ├── gnss_top_wrapper.v
+│   ├── nav_sim_control.v
+│   ├── epoch_50hz.v
+│   ├── epoch_1p5.v
+│   ├── epoch_6sec.v
+│   └── epoch_tow.v
 │   └── block-design wrapper files
 │
 ├── Block_design/
@@ -220,7 +218,7 @@ The positive and negative clock inputs are connected to the Clocking Wizard, whi
 │
 ├── Output_files/
 │   ├── bitstream
-│   ├── hardware platform
+│   ├── Waveforms
 │   └── executable files
 │
 └── README.md
